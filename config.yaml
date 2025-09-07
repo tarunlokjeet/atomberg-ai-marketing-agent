@@ -1,0 +1,130 @@
+# Atomberg Share of Voice (SoV) Agent Configuration
+
+# Search Configuration
+search:
+  primary_keywords:
+    - "smart fan"
+    - "smart ceiling fan"
+    - "IoT fan"
+    - "wifi ceiling fan"
+    - "app controlled fan"
+    - "energy efficient fan"
+  
+  # Number of results to analyze per platform (justified based on research showing top 20-30 results capture 80% of user attention)
+  max_results:
+    google: 30      # Top 30 Google results capture majority of search traffic
+    youtube: 25     # YouTube's first 2-3 pages are most viewed
+    twitter: 50     # Twitter requires more volume due to real-time nature
+    instagram: 20   # Instagram posts have longer visibility lifecycle
+
+# Brand Configuration
+brands:
+  target_brand: "Atomberg"
+  competitors:
+    - "Havells"
+    - "Orient"
+    - "Crompton"
+    - "Bajaj"
+    - "Usha"
+    - "Luminous"
+    - "Anchor"
+    - "V-Guard"
+    - "Khaitan"
+    - "Polycab"
+  
+  # Brand detection fuzzy matching threshold (0.8 = 80% similarity)
+  brand_match_threshold: 0.8
+
+# Platforms to analyze
+platforms:
+  enabled:
+    - "google"
+    - "youtube" 
+    - "twitter"
+    # - "instagram"  # Requires additional setup for Instagram Basic Display API
+  
+  # Platform-specific configurations
+  google:
+    search_type: "search"
+    country: "in"  # India market focus
+    language: "en"
+  
+  youtube:
+    order: "relevance"  # Can be: relevance, date, rating, viewCount
+    region_code: "IN"
+    max_results_per_page: 25
+  
+  twitter:
+    lang: "en"
+    result_type: "mixed"  # mixed, recent, popular
+
+# Sentiment Analysis Configuration
+sentiment:
+  model: "cardiffnlp/twitter-roberta-base-sentiment-latest"  # Pre-trained on social media text
+  batch_size: 16
+  confidence_threshold: 0.7  # Only consider high-confidence predictions
+
+# Share of Voice Calculation Weights
+sov_weights:
+  mention_frequency: 0.3    # How often brand is mentioned
+  engagement_score: 0.25    # Likes, shares, comments, views
+  search_ranking: 0.25      # Position in search results
+  sentiment_score: 0.2      # Positive vs negative sentiment
+
+# Engagement Scoring (platform-specific normalization)
+engagement_scoring:
+  google:
+    # For Google, we use position as proxy for engagement
+    position_weight: 1.0
+  
+  youtube:
+    view_count_weight: 0.4
+    like_count_weight: 0.3
+    comment_count_weight: 0.3
+  
+  twitter:
+    retweet_count_weight: 0.4
+    like_count_weight: 0.3
+    reply_count_weight: 0.3
+
+# Output Configuration
+output:
+  generate_visualizations: true
+  save_raw_data: true
+  output_formats: ["json", "csv", "html_report"]
+  
+  # Report sections to include
+  report_sections:
+    - "executive_summary"
+    - "sov_metrics"
+    - "sopv_analysis" 
+    - "competitor_analysis"
+    - "trending_themes"
+    - "recommendations"
+
+# Data Processing
+processing:
+  text_extraction:
+    max_content_length: 5000  # Limit content length for processing efficiency
+    remove_html: true
+    clean_text: true
+  
+  # Theme/topic extraction
+  theme_analysis:
+    min_keyword_frequency: 3
+    top_themes_count: 10
+    exclude_common_words: true
+
+# Rate Limiting (to respect API limits)
+rate_limits:
+  google_searches_per_minute: 10
+  youtube_requests_per_minute: 100
+  twitter_requests_per_minute: 300
+  delay_between_requests: 1  # seconds
+
+# Logging
+logging:
+  level: "INFO"
+  log_file: "logs/sov_agent.log"
+  max_log_size_mb: 10
+  backup_count: 5

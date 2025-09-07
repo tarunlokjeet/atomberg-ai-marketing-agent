@@ -1,0 +1,40 @@
+{
+  "mentions": {
+    "atomberg": 35,
+    "competitors": {
+      "havells": 14,
+      "crompton": 14,
+      "orient electric": 13,
+      "usha": 11,
+      "bajaj": 13
+    }
+  },
+  "sov": 35.0,
+  "sopv": 51.42857142857142,
+  "sentiment": {
+    "POSITIVE": 63,
+    "NEUTRAL": 69
+  },
+  "avg_price": {
+    "atomberg": 1500.0,
+    "competitors": null,
+    "advantage": null
+  },
+  "features": {
+    "atomberg": {
+      "energy": 30,
+      "performance": 7,
+      "quiet": 8,
+      "smart_control": 13,
+      "design": 10
+    },
+    "competitors": {
+      "energy": 26,
+      "design": 10,
+      "performance": 22,
+      "smart_control": 18
+    }
+  },
+  "influencers": [],
+  "recommendations": []
+}
